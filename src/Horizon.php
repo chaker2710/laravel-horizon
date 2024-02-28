@@ -53,6 +53,8 @@ class Horizon
      */
     public static $useDarkTheme = false;
 
+    public static ?string $withoutAssetsPublishing = null;
+
     /**
      * The database configuration methods.
      *
@@ -124,6 +126,11 @@ class Horizon
         return new static;
     }
 
+    public static function withoutAssetsPublishing(string $theme = 'dark')
+    {
+        static::$withoutAssetsPublishing = $theme;
+    }
+
     /**
      * Get the default JavaScript variables for Horizon.
      *
@@ -186,6 +193,10 @@ class Horizon
      */
     public static function assetsAreCurrent()
     {
+        if (static::$withoutAssetsPublishing) {
+            return true;
+        }
+
         $publishedPath = public_path('vendor/horizon/mix-manifest.json');
 
         if (! File::exists($publishedPath)) {

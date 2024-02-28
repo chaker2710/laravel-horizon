@@ -5,15 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(!$inlineAssetsTheme)
     <link rel="shortcut icon" href="{{ asset('/vendor/horizon/img/favicon.png') }}">
+    @endif
 
     <title>Horizon{{ config('app.name') ? ' - ' . config('app.name') : '' }}</title>
 
     <!-- Style sheets-->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
-    <link href="{{ asset(mix('app.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="light">
-    <link href="{{ asset(mix('app-dark.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="dark">
+    @if($inlineAssetsTheme)
+        <style>{!! file_get_contents(HORIZON_PATH . '/public/' . $inlineAssetsTheme === 'dark' ? 'app-dark.css' : 'app.css') !!}</style>
+    @else
+        <link href="{{ asset(mix('app.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="light">
+        <link href="{{ asset(mix('app-dark.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="dark">
+    @endif
 </head>
 <body>
 <div id="horizon" v-cloak>
@@ -141,6 +147,11 @@
     window.Horizon = @json($horizonScriptVariables);
 </script>
 
-<script src="{{asset(mix('app.js', 'vendor/horizon'))}}"></script>
+@if($inlineAssetsTheme)
+    <script>{!! file_get_contents(HORIZON_PATH . '/public/app.js') !!}</script>
+@else
+    <script src="{{asset(mix('app.js', 'vendor/horizon'))}}"></script>
+@endif
+
 </body>
 </html>

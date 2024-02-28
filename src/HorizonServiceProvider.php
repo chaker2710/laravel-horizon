@@ -82,6 +82,10 @@ class HorizonServiceProvider extends ServiceProvider
      */
     public function defineAssetPublishing()
     {
+        if (Horizon::$withoutAssetsPublishing) {
+            return;
+        }
+
         $this->publishes([
             HORIZON_PATH.'/public' => public_path('vendor/horizon'),
         ], ['horizon-assets', 'laravel-assets']);

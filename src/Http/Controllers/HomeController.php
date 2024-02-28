@@ -15,6 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('horizon::layout', [
+            'inlineAssetsTheme' => Horizon::$withoutAssetsPublishing,
             'assetsAreCurrent' => Horizon::assetsAreCurrent(),
             'horizonScriptVariables' => Horizon::scriptVariables(),
             'isDownForMaintenance' => App::isDownForMaintenance(),
