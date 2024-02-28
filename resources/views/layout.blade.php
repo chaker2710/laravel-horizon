@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
     @if($inlineAssetsTheme)
-        <style>{!! file_get_contents(HORIZON_PATH . '/public/' . $inlineAssetsTheme === 'dark' ? 'app-dark.css' : 'app.css') !!}</style>
+        <style>{!! file_get_contents(HORIZON_PATH . '/public/' . ($inlineAssetsTheme === 'dark' ? 'app-dark.css' : 'app.css')) !!}</style>
     @else
         <link href="{{ asset(mix('app.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="light">
         <link href="{{ asset(mix('app-dark.css', 'vendor/horizon')) }}" rel="stylesheet" data-scheme="dark">
